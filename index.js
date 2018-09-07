@@ -1,13 +1,11 @@
 const express = require('express')
 var bodyParser = require('body-parser')
 const app = express()
-var chaine = new Array ()
+var chaine ="";
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-app.get('/', function (req, res) {
-  res.send('Hello World!')
-})
+
 
 
 app.post('/', function (req, res){
@@ -16,23 +14,23 @@ app.post('/', function (req, res){
 
    if((req.body.Pwd.length < 8 ) )
    {
-     response = response+" "+"Not valid"
+     response = "Not valid"
       chaine.push(response);
 
    }
   
    if(matches && ( Object.keys(matches).length > 0) )
    {
-    response = response+" "+"weak"
-    chaine.push(response);
+    response = "weak"
+    chaine= response;
   }
    var tabnum = new Array('-','_','*','#')
 var char=req.body.Pwd.split('')
    
      for(var j = 0; j < char.length;j++ ){
        if (char.indexOf(char[j])>-1){
-         response = response +" "+"normal"
-         chaine.push(response);
+         response = "normal"
+         chaine = response;
          break;
        }
        
@@ -40,12 +38,39 @@ var char=req.body.Pwd.split('')
   
 
    for(var i = 0; i < char.length;i++){
-    if((char[i] == char[i].toUpperCase())&&(isNaN(char[i])))
-    response = response +" "+"hard"
-    chaine.push(response);
+    if((char[i] == char[i].toUpperCase())&&(isNaN(char[i]))){
+    response = "hard"
+    chaine = response;
     break;
-  }
-  res.send(chaine[0]);
+  }}
+
+  var maill = req.body.mail;  
+  var msg = "Votre Identifiant est invalide";
+  var nombre = 0;
+  var validion = 0;
+  var chaine1 = "" ;
+
+  for (var i = 0; i < maill.length; i++) {
+
+    if (maill[i] == "@" && i>1){
+        nombre = i;
+        validion = validion + 1;
+        msg = "@ exists"
+        chaine1 = msg;
+    }
+    if (maill[i] == "." && i>nombre+3){
+        nombre = i;
+        validion = validion + 1;
+        msg = "'.' exist"
+        chaine1 = msg;
+    }  
+    if (validion == 2 && i>nombre+2){
+        msg = "Votre Identifiant est valider";
+        chaine1 = msg ;
+    }
+}
+
+  res.send(chaine+" "+chaine1);
 
 
    //if(req.body.Pwd.substr(0,1).toUpperCase()!=req.body.Pwd.substr(0,1))
@@ -57,10 +82,12 @@ var char=req.body.Pwd.split('')
     //req.body.timestamp= Math.floor(new Date().getTime()/1000)
  // res.send(req.body)
 //})
-app.get('/x', function (req, res) {
-    res.send('bonjour!')
+/*app.post('/', function (req, res) {
+  var maill = req.body.mail
+  console.log(maill);
+    res.send(maill)
   })
-
+*/
 
 app.listen(4500, function () {
   console.log('Example app listening on port 4500!')
