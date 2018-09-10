@@ -11,6 +11,7 @@ app.use(bodyParser.json())
 app.post('/', function (req, res){
   var matches = req.body.Pwd.match(/\d+/g);
   var response = "";
+  var testmail = req.body.mail;
 
    if((req.body.Pwd.length < 8 ) )
    {
@@ -44,7 +45,7 @@ var char=req.body.Pwd.split('')
     break;
   }}
 
-  var maill = req.body.mail;  
+  /*var maill = req.body.mail;  
   var msg = "Votre Identifiant est invalide";
   var nombre = 0;
   var validion = 0;
@@ -68,9 +69,16 @@ var char=req.body.Pwd.split('')
         msg = "Votre Identifiant est valider";
         chaine1 = msg ;
     }
-}
+      res.send(chaine+" "+chaine1);
 
-  res.send(chaine+" "+chaine1);
+}*/  
+  var reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  if (reg.test(testmail)){
+    chaine1 ="test valide"
+}else{
+  chaine1 = "test non valide"
+}
+  res.send( chaine +" "+chaine1);
 
 
    //if(req.body.Pwd.substr(0,1).toUpperCase()!=req.body.Pwd.substr(0,1))
@@ -91,4 +99,4 @@ var char=req.body.Pwd.split('')
 
 app.listen(4500, function () {
   console.log('Example app listening on port 4500!')
-})
+})  
