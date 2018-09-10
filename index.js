@@ -58,9 +58,9 @@ var char=req.body.Pwd.split('')
 
 for(var k = 0; k < pseudoname.length;k++){
    if (pseudoname.indexOf(" ") == -1){
-     chaine2 ="contient pas espace "
+     chaine2 ="name contient pas espace "
    }else{
-     chaine2="contient espace "
+     chaine2="name contient espace "
    }
 
 }
@@ -78,7 +78,8 @@ if(tmp > 18){
   chaine3 = "Mineur"
 }
 
-  res.send( chaine +"    "+chaine1+"    "+chaine2 +"   "+chaine3+" avec age"+tmp);
+  res.send( chaine +"    "+chaine1+"    "+chaine2 +"   "+chaine3+" avec age "+tmp
+);
 })
 app.listen(4500, function () {
   console.log('Example app listening on port 4500!')
